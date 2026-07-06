@@ -44,7 +44,7 @@ class TestBukuTamu:
         app.config['TESTING'] = True
         with app.test_client() as client:
             response = client.get('/')
-            assert response.status_code == 200
+            assert response.status_code == 500 # SENGAJA DIUBAH MENJADI 500 AGAR PIPELINE GAGAL
 
     @patch('app.get_db_connection')
     def test_halaman_utama_berisi_judul(self, mock_get_db):

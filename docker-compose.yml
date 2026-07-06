@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # ========== Service 1: Aplikasi Flask ==========
+  app:
+    build: .
+    container_name: buku-tamu-app
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=guestbook
+      - DB_PORT=3306
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # ========== Service 2: Database MySQL ==========
+  db:
+    image: mysql:8.0
+    container_name: buku-tamu-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: guestbook
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+# Persistent volume agar data MySQL tidak hilang
+volumes:
+  mysql_data:
